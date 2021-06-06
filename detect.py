@@ -25,12 +25,12 @@ new_df = pd.DataFrame(data = arr, columns = ['X1', 'X2', 'X3', 'X4'])
 
 # ---- Feature Extraction ----
 
-# Adding new features acc to Octet Method
+# Adding new features according to Octet Method
 new_df['N2'] = 256 + new_df['X2']
 new_df['N3'] = 512 + new_df['X3']
 new_df['N4'] = 768 + new_df['X4']
 
-# Additional features for Ex-Octet Method
+# Additional features according to Ex-Octet Method
 new_df['N5'] = 768 + (new_df['X1']+new_df['X2'])%256
 new_df['N6'] = 1024 + (new_df['X1']+new_df['X2']+new_df['X3'])%256
 
