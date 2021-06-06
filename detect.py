@@ -37,7 +37,7 @@ X_test = np.concatenate((df2[10002:11002], df2[34441:49441]), axis = 0)
 y_test = np.concatenate((target[10002:11002], target[34441:49441]), axis = 0)
 
 
-model = RandomForestClassifier()
+model = SVC(gamma=0.0001)
 
 model.fit(X_train, y_train)
 
