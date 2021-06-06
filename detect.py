@@ -12,7 +12,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 # load dataset
 df = pd.read_csv('data/dataset.csv')
 
-# ip and target
+# ip and target (numpy arrays)
 df_ip = df['IP'].values
 target = df['target'].values
 
@@ -21,10 +21,9 @@ target = df['target'].values
 arr = np.array(list(map(lambda x: x.split('.'), df_ip))).astype(np.int)
 
 # convert numpy array `arr` to pandas DataFrame
-
 new_df = pd.DataFrame(data = arr, columns = ['X1', 'X2', 'X3', 'X4'])
 
-# # Feature Extraction
+# ---- Feature Extraction ----
 
 # Adding new features acc to Octet Method
 new_df['N2'] = 256 + new_df['X2']
@@ -35,11 +34,10 @@ new_df['N4'] = 768 + new_df['X4']
 new_df['N5'] = 768 + (new_df['X1']+new_df['X2'])%256
 new_df['N6'] = 1024 + (new_df['X1']+new_df['X2']+new_df['X3'])%256
 
-
+# final dataframe used for train/test
 df2 = new_df[['X1', 'N2', 'N3', 'N5', 'N6']].values
 
-
-# Combining malicious and benign data for train and test
+# Combining malicious and benign data for train/test
 X_train = np.concatenate((df2[:14001], df2[24438:34440]), axis = 0)
 y_train = np.concatenate((target[:14001], target[24438:34440]), axis = 0)
 
@@ -47,14 +45,14 @@ X_test = np.concatenate((df2[10002:11002], df2[34441:49441]), axis = 0)
 y_test = np.concatenate((target[10002:11002], target[34441:49441]), axis = 0)
 
 
-
+# fit/predict
 model = RandomForestClassifier()
 
 model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
 
-print(model.score(X_test, y_test))
+print(accuracy_score(y_pred, y_test))
 
 
 
