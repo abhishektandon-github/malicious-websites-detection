@@ -9,7 +9,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-df = pd.read_csv('dataset.csv')
+df = pd.read_csv('data/dataset.csv')
 
 df_ip = df['IP'].values
 target = df['target'].values
@@ -29,7 +29,6 @@ new_df['N6'] = 1024 + (new_df['X1']+new_df['X2']+new_df['X3'])%256
 
 df2 = new_df[['X1', 'N2', 'N3', 'N5', 'N6']].values
 
-
 X_train = np.concatenate((df2[:14001], df2[24438:34440]), axis = 0)
 y_train = np.concatenate((target[:14001], target[24438:34440]), axis = 0)
 
@@ -37,7 +36,7 @@ X_test = np.concatenate((df2[10002:11002], df2[34441:49441]), axis = 0)
 y_test = np.concatenate((target[10002:11002], target[34441:49441]), axis = 0)
 
 
-model = SVC(gamma=0.0001)
+model = RandomForestClassifier()
 
 model.fit(X_train, y_train)
 
@@ -50,7 +49,3 @@ print(model.score(X_test, y_test))
 
 # print(df['target'].iloc[24437]) // end of mal
 # print(df['target'].iloc[24439]) // begin of benign
-
-
-
-
